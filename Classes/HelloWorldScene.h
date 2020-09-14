@@ -28,7 +28,10 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "SimpleAudioEngine.h"
+#include "FairyGUI.h"
+
 using namespace CocosDenshion;
+USING_NS_FGUI;
 
 class HelloWorld : public cocos2d::Scene
 {
@@ -36,6 +39,9 @@ public:
     static cocos2d::Scene* createScene();
 
     virtual bool init();
+    virtual void continueInit();
+
+    GRoot* _groot;
 
     cocos2d::MenuItemImage *createPad(const cocos2d::Vec2 &position, std::string buttonsColors);
 

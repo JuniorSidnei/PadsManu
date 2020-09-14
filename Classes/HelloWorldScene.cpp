@@ -29,32 +29,32 @@
 #define BACKGROUND_MUSIC_SFX  "background-music-aac.mp3"
 #define PEW_PEW_SFX "pew-pew-lei.mp3"
 
-const char* fontName = "fonts/Uni Sans Heavy.otf";
+const char *fontName = "fonts/Uni Sans Heavy.otf";
 
 
 USING_NS_CC;
 
-Scene* HelloWorld::createScene()
-{
+Scene *HelloWorld::createScene() {
     return HelloWorld::create();
 }
 
 // Print useful error message instead of segfaulting when files are not there.
-static void problemLoading(const char* filename)
-{
+static void problemLoading(const char *filename) {
     printf("Error while loading: %s\n", filename);
     printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
 }
 
 // on "init" you need to initialize your instance
-bool HelloWorld::init()
-{
-    //////////////////////////////
-    // 1. super init first
-    if ( !Scene::init() )
-    {
+bool HelloWorld::init() {
+
+    if (!Scene::init()) {
         return false;
     }
+
+    _groot = GRoot::create(this);
+    _groot->retain();
+
+    continueInit();
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -71,7 +71,7 @@ bool HelloWorld::init()
 
     // add background
     auto bg = DrawNode::create();
-    bg->drawSolidRect(origin, visibleSize, Color4F(0.14,0.16,0.18, 1));
+    bg->drawSolidRect(origin, visibleSize, Color4F(0.14, 0.16, 0.18, 1));
     this->addChild(bg, 0);
 
     //add bg to menu
@@ -81,7 +81,7 @@ bool HelloWorld::init()
 
 
     //add pads
-    generatePads(4,3);
+    generatePads(4, 3);
 
     //add bg music
     //SimpleAudioEngine().getInstance()->playBackgroundMusic(BACKGROUND_MUSIC_SFX, true);
@@ -89,8 +89,8 @@ bool HelloWorld::init()
     return true;
 }
 
-MenuItemImage * HelloWorld::createPad(const Vec2 &position, std::string buttonsColors) {
-    auto padButton = MenuItemImage::create(buttonsColors, buttonsColors, [&](Ref* sender) {
+MenuItemImage *HelloWorld::createPad(const Vec2 &position, std::string buttonsColors) {
+    auto padButton = MenuItemImage::create(buttonsColors, buttonsColors, [&](Ref *sender) {
         SimpleAudioEngine().getInstance()->playEffect(PEW_PEW_SFX);
     });
     padButton->setPosition(position);
@@ -105,7 +105,7 @@ void HelloWorld::generatePads(int padAmountLine, int padAmountCollum) {
 
     for (int y = 0; y < padAmountLine; y++) {
 
-        for(int x = 0; x < padAmountCollum; x++) {
+        for (int x = 0; x < padAmountCollum; x++) {
             float padX, padY;
             padX = 148 + (266 * x);
             padY = 1094 - (266 * y);
